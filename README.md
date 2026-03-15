@@ -4,9 +4,9 @@
 
 [English](./README.md) | [中文](./README.zh-CN.md)
 
-A channel-agnostic skill for saving articles for later reading. It defines how links shared in a chat or agent environment should be summarized, classified, deduplicated, stored in MongoDB, and later retrieved with evidence-backed answers.
+A read-later skill repository that defines how article links shared in a chat or agent environment should be summarized, classified, deduplicated, and stored in MongoDB for later retrieval and follow-up questions.
 
-This repository mainly contains skill instructions and reference documents. It is meant to serve as an Agent Skill / prompt-spec repository rather than a full runtime application.
+This repository primarily contains skill instructions and reference documents, and is intended to serve as an Agent Skill / prompt-spec repository.
 
 ## Goals
 
@@ -14,7 +14,7 @@ This repository mainly contains skill instructions and reference documents. It i
 - Extract structured metadata such as summary, tags, topic, and user notes
 - Deduplicate records with `canonical_url` and `url_hash`
 - Store records in the fixed collection `readlater.articles`
-- Support later retrieval by time range, topic, source, and keywords
+- Support later retrieval and follow-up questions using time range, topic, source site, and keyword filters
 
 ## Repository Structure
 
@@ -29,10 +29,10 @@ This repository mainly contains skill instructions and reference documents. It i
 
 ### Files
 
-- `SKILL.md`: main skill definition, including scope, write flow, retrieval flow, response contract, and safety rules
-- `references/mongodb-collection-schema.md`: MongoDB document shape, recommended indexes, and query constraints
-- `references/reply-templates.md`: response templates for save confirmation, question answering, and low-confidence fallback
-- `references/smoke-test.md`: a 5-step smoke test for validating the skill in a local chat window or any agent chat environment
+- `SKILL.md`: the main skill definition, including scope, write flow, retrieval flow, response contract, and safety rules
+- `references/mongodb-collection-schema.md`: the MongoDB document schema, recommended indexes, and query constraints
+- `references/reply-templates.md`: reusable templates for save confirmations, question answering, and low-confidence fallback
+- `references/smoke-test.md`: a five-step smoke test for validating the skill in a local chat window or any agent chat environment
 
 ## Core Workflow
 
@@ -44,8 +44,8 @@ When a user sends an article link, the skill should:
 2. Build `url_hash` from the normalized URL
 3. Deduplicate by `canonical_url` first, then by `url_hash`
 4. Build a structured document
-5. Insert or update allowed fields in MongoDB
-6. Return a short acknowledgment with summary, tags, original URL, and record ID
+5. Insert a new record or update only the allowed fields in MongoDB
+6. Return a short acknowledgment with the summary, tags, original URL, and record ID
 
 Recommended fields:
 
@@ -69,7 +69,7 @@ When the user asks about a previously saved article, the skill should:
 1. Parse constraints such as time range, topic keywords, or source site
 2. Query `readlater.articles` with those filters
 3. Rank candidates by topic relevance and recency
-4. Answer from stored `summary`, `key_points`, and `evidence_snippets`
+4. Answer using the stored `summary`, `key_points`, and `evidence_snippets`
 5. Ask one clarification question if confidence is too low
 
 ## MongoDB Conventions
@@ -79,12 +79,12 @@ This project uses:
 - Database: `readlater`
 - Collection: `articles`
 
-See `references/mongodb-collection-schema.md` for the full schema. Key constraints:
+See `references/mongodb-collection-schema.md` for the full schema. Key constraints include:
 
 - All writes go to `readlater.articles`
 - Dedup priority: `canonical_url` -> `url_hash`
 - Use `saved_at` for time filtering
-- Use `topic` + `tags` for topic retrieval
+- Use `topic` + `tags` for topical retrieval
 - Recommended write safety filter: `created_by = "read-later-skill"`
 
 Recommended indexes:
@@ -102,8 +102,8 @@ db.articles.createIndex({ created_by: 1, saved_at: -1 })
 
 The repository includes reusable reply templates for:
 
-- save acknowledgment with summary, tags, original URL, and record ID
-- question answering with conclusion, supporting points, original URL, and record ID
+- save acknowledgments with the summary, tags, original URL, and record ID
+- question answering with a conclusion, supporting points, the original URL, and the record ID
 - low-confidence fallback with candidate articles and one follow-up question
 
 See `references/reply-templates.md`.
@@ -122,17 +122,8 @@ If all five steps pass, the basic save-and-retrieval flow is working.
 
 ## Use Cases
 
-- personal read-later collection
+- personal read-later collections
 - article saving in conversational agents
 - lightweight knowledge retention and retrieval on MongoDB
 - structured context for later article Q&A
 
-## Current Scope
-
-This repository is currently documentation-first. Good next additions would be:
-
-- channel integration examples such as Telegram, Web Chat, or CLI
-- URL normalization implementation
-- summary and tagging strategy
-- MongoDB MCP usage examples
-- automated checks or scripted validation
