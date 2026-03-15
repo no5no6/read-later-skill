@@ -1,5 +1,7 @@
 # read-later-skill
 
+![read-later-skill cover](./assets/read-later-skill-cover.png)
+
 [English](./README.md) | [中文](./README.zh-CN.md)
 
 这是一个渠道无关的“稍后读文章收录”技能仓库，用来定义如何把用户在聊天或 Agent 环境中发来的文章链接进行摘要、分类、去重，并写入 MongoDB，方便后续检索和追问。

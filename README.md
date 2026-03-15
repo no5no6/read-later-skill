@@ -1,5 +1,7 @@
 # read-later-skill
 
+![read-later-skill cover](./assets/read-later-skill-cover.png)
+
 [English](./README.md) | [中文](./README.zh-CN.md)
 
 A channel-agnostic skill for saving articles for later reading. It defines how links shared in a chat or agent environment should be summarized, classified, deduplicated, stored in MongoDB, and later retrieved with evidence-backed answers.
