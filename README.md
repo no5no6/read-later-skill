@@ -4,9 +4,9 @@
 
 [English](./README.md) | [中文](./README.zh-CN.md)
 
-A read-later skill repository that defines how article links shared in a chat or agent environment should be summarized, classified, deduplicated, and stored in MongoDB for later retrieval and follow-up questions.
+A read-later skill repository that defines how article links shared by users in a chat or agent environment should be summarized, classified, deduplicated, and written to MongoDB for later retrieval and follow-up questions.
 
-This repository primarily contains skill instructions and reference documents, and is intended to serve as an Agent Skill / prompt-spec repository.
+This repository mainly contains skill instructions and reference documents, and is suitable for use as an Agent Skill / prompt-spec repository.
 
 ## Goals
 
@@ -14,7 +14,7 @@ This repository primarily contains skill instructions and reference documents, a
 - Extract structured metadata such as summary, tags, topic, and user notes
 - Deduplicate records with `canonical_url` and `url_hash`
 - Store records in the fixed collection `readlater.articles`
-- Support later retrieval and follow-up questions using time range, topic, source site, and keyword filters
+- Support later retrieval and follow-up questions by time range, topic, source site, and keywords
 
 ## Repository Structure
 
