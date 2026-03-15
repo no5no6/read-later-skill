@@ -15,7 +15,7 @@ Use one fixed collection: `readlater.articles`.
   "saved_at": "date",
   "last_updated_at": "date",
   "status": "Unread|Reading|Done|Archived",
-  "topic": "AI|Engineering|Product|Business|Design|Data|Other",
+  "topic": "AI|Engineering|Product|Business|Design|Data|Science|Media|Society|Health|Lifestyle",
   "tags": ["string"],
   "language": "zh|en|other",
   "user_note": "string",
@@ -43,3 +43,8 @@ db.articles.createIndex({ created_by: 1, saved_at: -1 })
 - Time filter: `saved_at`.
 - Topic retrieval: `topic` plus `tags`.
 - Safety filter for writes: `created_by = "read-later-skill"`.
+
+## Field notes
+
+- `topic`: one primary category chosen from the fixed taxonomy.
+- `tags`: free-form, content-specific tags and should not be limited to the topic taxonomy.

@@ -80,14 +80,19 @@ Never invent article details. If record data is insufficient, say so explicitly.
 
 - Keep summary to 120-220 Chinese characters by default.
 - Keep key points to 3-5 bullets.
-- Tag count: 3-6.
-- Prefer stable topic taxonomy:
+- `tags`: generate 3-6 specific tags from the article content. Tags are free-form and should not be limited to the topic taxonomy.
+- `topic`: choose one primary category from this stable taxonomy:
 - `AI`
 - `Engineering`
 - `Product`
 - `Business`
 - `Design`
 - `Data`
+- `Science`
+- `Media`
+- `Society`
+- `Health`
+- `Lifestyle`
 
 ## Read policy
 
